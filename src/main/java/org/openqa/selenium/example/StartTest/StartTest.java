@@ -1,17 +1,34 @@
 package org.openqa.selenium.example.StartTest;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Scanner;
 
+
 public class StartTest  {
-    public static void main(String[] args) {
+
+    public static final String USERNAME = "propellerads";
+    public static final String ACCESS_KEY = "26afe3cc-980b-4fd5-ad37-81f748f10b5c";
+    public static final String URL = "http://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:80/wd/hub";
+    public static void main(String[] args) throws MalformedURLException {
+
         Scanner in = new Scanner(System.in);
         String url = "http://";
+        boolean isOnclick = false;
         System.out.print("Enter site to test: ");
         url += in.nextLine();
-        WebDriver driver = new FirefoxDriver();
-        boolean isOnclick = false;
+
+        DesiredCapabilities caps = DesiredCapabilities.firefox();
+        caps.setCapability("platform", "Windows 10");
+        caps.setCapability("version", "41.0");
+        caps.setCapability("name", "Java test");
+
+        WebDriver driver = new RemoteWebDriver(new URL(URL), caps);
+
         driver.get(url);
         String startPage = driver.getWindowHandle();
         driver.switchTo().activeElement().click();
@@ -27,15 +44,12 @@ public class StartTest  {
                 }
                 isOnclick = true;
             }
-
         }
-        // Alternatively the same thing can be done like this
-        // driver.navigate().to("http://www.google.com");
 
         // Check the title of the page
         System.out.println("Onclick is: " + isOnclick);
 
         //Close the browser
-            driver.quit();
+        driver.quit();
     }
 }
