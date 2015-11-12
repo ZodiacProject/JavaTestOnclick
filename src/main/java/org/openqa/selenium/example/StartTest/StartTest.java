@@ -1,11 +1,11 @@
 package org.openqa.selenium.example.StartTest;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
+//import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-
-import java.net.MalformedURLException;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.Scanner;
 
 
@@ -17,19 +17,19 @@ public class StartTest  {
     public static void main(String[] args) throws MalformedURLException {
 
         Scanner in = new Scanner(System.in);
-        String url = "http://";
+        String url = "http:" + "//";
         boolean isOnclick = false;
         System.out.print("Enter site to test: ");
         url += in.nextLine();
 
+
         DesiredCapabilities caps = DesiredCapabilities.firefox();
         caps.setCapability("platform", "Windows 10");
         caps.setCapability("version", "41.0");
-        caps.setCapability("name", "Java test");
+        caps.setCapability("name", "Java simple test");
 
         WebDriver driver = new RemoteWebDriver(new URL(URL), caps);
-
-        driver.get(url);
+        driver.navigate().to(url);
         String startPage = driver.getWindowHandle();
         driver.switchTo().activeElement().click();
         if (driver.getWindowHandles().size() > 1)
@@ -42,8 +42,8 @@ public class StartTest  {
                     System.out.println(driver.getTitle());
                     driver.close();
                 }
-                isOnclick = true;
             }
+            isOnclick = true;
         }
 
         // Check the title of the page
