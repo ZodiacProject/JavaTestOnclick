@@ -28,7 +28,7 @@ public class TakeParamToTest
             cap.setVersion("9.0");
 
         cap.setCapability("platform", platform);
-        cap.setCapability("name", "Java the test failed");
+        cap.setCapability("name", "Java test");
         System.out.println();
         WebDriver driver = new RemoteWebDriver(new URL(URL), cap);
         return driver;
